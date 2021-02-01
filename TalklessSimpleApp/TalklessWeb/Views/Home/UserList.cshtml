@@ -1,0 +1,42 @@
+﻿@model List<TalklessWeb.Models.ProfileViewModel>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "UserList";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <strong>Felhasználók listája</strong> Katt a felhasználónévre, hogy üzenetet küldhess.
+        </div>
+    </div>
+
+    <div>
+        <p>
+            <div class="">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Felhasználónév</th>
+                            <th>Teljes név</th>
+                        </tr>
+                    </thead>
+                    @foreach (var user in Model)
+                    {
+                        if (user.IsVisibleProfile && user.UserId != User.Identity.GetUserId())
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@Html.ActionLink(@user.UserName, "Create", "Message", new { id = user.UserId }, null)</td>
+                                    <td>@user.LastName @user.FirstName</td>
+                                </tr>
+                            </tbody>
+                        }
+                    }
+                </table>
+            </div>
+        </p>
+    </div>
+
+</div>
+<br />

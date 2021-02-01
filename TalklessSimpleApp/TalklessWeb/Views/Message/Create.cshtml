@@ -1,0 +1,43 @@
+﻿@model TalklessWeb.Models.MessageCreateViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Üzenet @Model.ReceiverView.UserName</h2>
+<div>
+    @{
+        if (Model.sendedMessages < 5)
+        {
+            using (Html.BeginForm("Create", "Message", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+
+                <div class="alert alert-warning" role="alert">
+                    <strong>Figyelem</strong> Ma már @Model.sendedMessages db üzenetet küldtél. Maximum 5 üzenetet tudsz küldeni. 
+                </div>
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.ReceiverUser, new { @Value = Model.ReceiverView.UserId })
+                    @Html.LabelFor(model => model.MessageText, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MessageText)
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                <strong>Sajnos ma már nem küldhetsz több üzenetet!</strong>
+            </div>
+        }
+
+
+    }
+</div>
+

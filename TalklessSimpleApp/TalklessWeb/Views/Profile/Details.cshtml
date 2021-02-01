@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNet.Identity
+@model TalklessWeb.Models.ProfileViewModel
+@*@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+<div>
+
+</div>
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <div class="panel-title">
+            Részletek:
+        </div>
+    </div>
+    <div class="panel-body">
+        
+            <strong>Felhasználónév:</strong> @Model.UserName
+            <br>
+            <strong>Teljes név:</strong> @Model.LastName @Model.FirstName
+            <br>
+            <strong>Telefonszám:</strong> @Model.Phonenumber
+            <br>
+      
+    </div>
+    <div>
+
+        @if (@Model.IsVisibleProfile)
+        {
+            <h3>
+                <span class="label label-info">
+                    A Profil mások számára látható.
+                </span>
+                <br>
+            </h3><br>
+        }
+        else
+        {
+            <h3>
+                <span class="label label-warning">
+                    Profilod el van rejtve a többi felhasználótól.
+                </span><br>
+            </h3><br>
+        }
+        <div class="col-md-6">@Html.ActionLink("Profil láthatóságának módosítása!", "Edit", "Profile")</div>
+        <br />
+        <div class="col-md-6">
+            @Html.ActionLink("Jelszó megváltoztatása!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+        </div>
+        <br>
+    </div>
+ </div>
