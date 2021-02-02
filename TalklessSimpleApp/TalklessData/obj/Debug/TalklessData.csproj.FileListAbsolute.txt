@@ -12,3 +12,16 @@ d:\Coding\source\repos\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.csp
 d:\Coding\source\repos\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.csproj.CopyComplete
 d:\Coding\source\repos\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.dll
 d:\Coding\source\repos\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.pdb
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\bin\Debug\TalklessData.dll.config
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\bin\Debug\TalklessData.dll
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\bin\Debug\TalklessData.pdb
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\bin\Debug\EntityFramework.dll
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\bin\Debug\EntityFramework.SqlServer.dll
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\bin\Debug\EntityFramework.xml
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\bin\Debug\EntityFramework.SqlServer.xml
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.Migrations._02012310.resources
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.csproj.GenerateResource.cache
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.csproj.CoreCompileInputs.cache
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.csproj.CopyComplete
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.dll
+d:\Coding\source\repos\forgit\Talkless\TalklessSimpleApp\TalklessData\obj\Debug\TalklessData.pdb

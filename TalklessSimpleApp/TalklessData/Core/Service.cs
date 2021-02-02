@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TalklessData.Entities;
 
 namespace TalklessData.Core
@@ -8,7 +9,13 @@ namespace TalklessData.Core
     {
         public static UserAccount GetUserAccount(string userId)
         {
-            UserAccount userAccount = UserAccount.GetUserAccount(userId);
+            UserAccount userAccount;
+            using (var talklessContext = new TalklessContext())
+            {
+                userAccount = talklessContext.UserAccounts.Where(userElement => userElement.UserId.Equals(userId))
+                                                          .FirstOrDefault();
+
+            }
             return userAccount;
         }
 
@@ -22,18 +29,35 @@ namespace TalklessData.Core
                 LastName = lastName,
                 PhoneNumber = number
             };
-            UserAccount.SaveUserAccount(newUserAccount);
+            using (var talklessContext = new TalklessContext())
+            {
+                talklessContext.UserAccounts.Add(newUserAccount);
+                talklessContext.SaveChanges();
+            }
         }
 
         public static List<UserAccount> GetUserAccounts()
         {
-            List<UserAccount> userAccounts = UserAccount.GetUserAccounts();
-            return userAccounts;
+            using (var talklessContext = new TalklessContext())
+            {
+                var userAccount = talklessContext.UserAccounts
+                                                 .ToList();
+                return userAccount;
+            }
         }
 
         public static void ModifyUserAccount(string userId, bool visibility)
         {
-            UserAccount.ModifyUserAccountVisibility(userId, visibility);
+            using (var talklessContext = new TalklessContext())
+            {
+                var userAccount = talklessContext.UserAccounts.Where(userElement => userElement.UserId == userId)
+                                                              .FirstOrDefault();
+                if (userAccount != null)
+                {
+                    userAccount.IsVisibleProfile = visibility;
+                    talklessContext.SaveChanges();
+                }
+            }
         }
 
 
@@ -48,25 +72,70 @@ namespace TalklessData.Core
                 MessageText = messageText,
                 SeenByReceiver = false
             };
+            using (var talklessContext = new TalklessContext())
+            {
+                MessageGroup messageGroup = talklessContext.MessageGroups.Where(mGroupElement => (mGroupElement.Participant1.Equals(receiverUser)
+                                                                                                    || mGroupElement.Participant1.Equals(senderUser))
+                                                                                              && (mGroupElement.Participant2.Equals(receiverUser)
+                                                                                                    || mGroupElement.Participant2.Equals(senderUser)))
+                                                                          .FirstOrDefault();
 
-            Message.SaveMessage(message);
+                if (messageGroup != null)
+                {
+                    message.MessageGroupId = messageGroup.Id;
+                }
+                else
+                {
+                    var messageGroupForSave = new MessageGroup()
+                    {
+                        Participant1 = senderUser,
+                        Participant2 = receiverUser
+                    };
+                    talklessContext.MessageGroups.Add(messageGroupForSave);
+                    talklessContext.SaveChanges();
+                    message.MessageGroupId = messageGroupForSave.Id;
+                }
+
+                talklessContext.Messages.Add(message);
+                talklessContext.SaveChanges();
+            }
         }
 
         public static List<Message> GetMessages(string userId)
         {
-            List<Message> message = Message.GetMessages(userId);
-            return message;
+            List<Message> messages;
+            using (var talklessContext = new TalklessContext())
+            {
+                messages = talklessContext.Messages.Where(messageElement => messageElement.ReceiverUser.Equals(userId)
+                                                                         || messageElement.SenderUser.Equals(userId))
+                                                   .OrderByDescending(messageElement => messageElement.CreateTime)
+                                                   .ThenByDescending(messageElement => messageElement.Id)
+                                                   .ToList();
+            }
+            return messages;
         }
 
         public static List<int> GetMessageGroupIds(string userId)
         {
-            List<int> messageGroupIds = MessageGroup.GetMessageGroupIds(userId);
-            return messageGroupIds;
+            using (var talklessContext = new TalklessContext())
+            {
+                List<int> messageGroupIds = talklessContext.MessageGroups.Where(mGroupElement => mGroupElement.Participant1.Equals(userId)
+                                                                                              || mGroupElement.Participant2.Equals(userId))
+                                                                         .Select(messageGroupElement => messageGroupElement.Id)
+                                                                         .Distinct()
+                                                                         .ToList();
+                return messageGroupIds;
+            }
         }
 
         public static void SetMessageAsReceived(int id)
         {
-            Message.SetMessageAsReceived(id);
+            using (var talklessContext = new TalklessContext())
+            {
+                var message = talklessContext.Messages.Where(messageElement => messageElement.Id == id).FirstOrDefault();
+                message.SeenByReceiver = true;
+                talklessContext.SaveChanges();
+            }
         }
 
         #endregion
