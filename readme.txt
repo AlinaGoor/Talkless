@@ -11,3 +11,4 @@ Az alap Feature-ök megvalósításra kerültek valamilyen módon.
 - User elrejtheti magát a listából
 - Üzenet olvasottnak, olvasatlannak jelölése
 
+SimpleTalklessDB egy egyszerű backup (bak)file ezekkel a userekkel és néhány üzenettel.
